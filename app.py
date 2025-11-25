@@ -40,18 +40,14 @@ st.markdown("""
         font-weight: bold !important; border: none !important; width: 100%;
     }
     
+    .input-section {
+        background: #f8f9fa; padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;
+    }
+    
     .result-card {
         background: #D32F2F;
         color: white; padding: 2rem; border-radius: 16px; text-align: center;
         box-shadow: 0 10px 30px rgba(211,47,47,0.3);
-    }
-    
-    /* Make columns equal width when sidebar is open */
-    .row-widget.stColumns {
-        width: 100% !important;
-    }
-    .element-container {
-        width: 100% !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -91,7 +87,8 @@ with st.sidebar:
 
 # ==================== HEADER ====================
 st.markdown("<h1 style='text-align:center; color:#D32F2F; margin:0;'>Medical Insurance</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align:center; color:#D32F2F; opacity:0.9; margin-top:8px;'>Cost Analysis</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center; color:#D32F2F; opacity:0.9; margin-top:8px;'>Cost Analysis & Prediction</h2>", unsafe_allow_html=True)
+st.markdown("---")
 
 # ==================== TOP METRICS ====================
 col1, col2, col3, col4 = st.columns(4)
@@ -139,58 +136,40 @@ left_col, right_col = st.columns([2, 1])
 
 with left_col:
     if page == "Overview":
-        # Use columns with specific widths to ensure equal sizing
-        col1, col2 = st.columns([1, 1])  # Equal columns
-        
+        st.subheader("Project Overview")
+        col1, col2 = st.columns([1, 2])
         with col1:
-            st.markdown(f'''
-            <div class="stat-card" style="height: 300px; display: flex; flex-direction: column; justify-content: center;">
-                <img src="https://img.icons8.com/color/200/health-checkup.png" width="150" style="margin: 0 auto;">
-            </div>
-            ''', unsafe_allow_html=True)
-            
+            st.image("https://img.icons8.com/color/200/health-checkup.png", width=150)
         with col2:
-            st.markdown(f'''
-            <div class="stat-card" style="height: 300px;">
-                <h3>Project Overview</h3>
-                <div style="text-align: left; margin-top: 20px;">
-                    <p><strong>Key Objectives:</strong></p>
-                    <p>• Explore factors influencing medical insurance costs</p>
-                    <p>• Identify patterns and relationships between variables</p>
-                    <p>• Provide data-driven insights for pricing strategies</p>
-                    <p>• Develop predictive model for premium estimation</p>
-                </div>
-            </div>
-            ''', unsafe_allow_html=True)
+            st.markdown("Key Objectives:")
+            st.markdown("• Explore factors influencing medical insurance costs")
+            st.markdown("• Identify patterns and relationships between variables")
+            st.markdown("• Provide data-driven insights for pricing strategies")
+            st.markdown("• Develop predictive model for premium estimation")
         
-        # Research Questions - also in equal columns
-        st.markdown("<br>", unsafe_allow_html=True)
+        # Research Questions
         st.subheader("Research Questions & Hypotheses")
-        
-        research_col1, research_col2 = st.columns([1, 1])  # Equal columns
-        
-        with research_col1:
-            with st.expander("R1 & H1: Age-Smoking Relationship", expanded=True):
-                st.markdown("""
-                **R1:** How does the relationship between age and medical insurance costs differ between smokers and non-smokers?
-               
-                **H1:** The relationship is non-linear and accelerating, significantly steeper for smokers.
-                """)
-            
-            with st.expander("R2 & H2: Regional Cost Premium"):
-                st.markdown("""
-                **R2:** Does the Southeast region maintain a statistically significant cost premium over the Southwest?
-               
-                **H2:** Yes — disparity persists even among low-risk individuals.
-                """)
-        
-        with research_col2:
-            with st.expander("R3 & H3: Smoking Dominance"):
-                st.markdown("""
-                **R3:** Is the smoking cost premium the dominant factor in medical expenses?
-               
-                **H3:** Yes — largest single cost difference in the dataset.
-                """)
+       
+        with st.expander("R1 & H1: Age-Smoking Relationship"):
+            st.markdown("""
+            R1: How does the relationship between age and medical insurance costs differ between smokers and non-smokers?
+           
+            H1: The relationship is non-linear and accelerating, significantly steeper for smokers.
+            """)
+       
+        with st.expander("R2 & H2: Regional Cost Premium"):
+            st.markdown("""
+            R2: Does the Southeast region maintain a statistically significant cost premium over the Southwest?
+           
+            H2: Yes — disparity persists even among low-risk individuals.
+            """)
+       
+        with st.expander("R3 & H3: Smoking Dominance"):
+            st.markdown("""
+            R3: Is the smoking cost premium the dominant factor in medical expenses?
+           
+            H3: Yes — largest single cost difference in the dataset.
+            """)
 
     elif page == "Data Analysis":
         st.subheader("Data Analysis")
@@ -289,23 +268,27 @@ with left_col:
         st.subheader("Premium Calculator")
         st.markdown("Enter your details below to get an instant insurance premium estimate")
         
-        # Personal Information Section - without boxes
+        # Personal Information Section
         st.markdown("### Personal Information")
         col1, col2 = st.columns(2)
         
         with col1:
+            st.markdown('<div class="input-section">', unsafe_allow_html=True)
             age = st.slider("Age", 18, 100, 35, help="Your current age")
             bmi = st.number_input("BMI", 15.0, 50.0, 25.0, 0.1, 
                                 help="Body Mass Index (Normal: 18.5-24.9)")
             children = st.selectbox("Number of Children", [0,1,2,3,4,5],
                                   help="Dependents covered by insurance")
+            st.markdown('</div>', unsafe_allow_html=True)
         
         with col2:
+            st.markdown('<div class="input-section">', unsafe_allow_html=True)
             sex = st.radio("Gender", ["male", "female"], horizontal=True)
             smoker = st.radio("Smoker", ["no", "yes"], horizontal=True,
                             help="Tobacco usage significantly affects premiums")
             region = st.selectbox("Region", df['region'].unique(),
                                 help="Your geographic location")
+            st.markdown('</div>', unsafe_allow_html=True)
         
         # Calculate Button
         col_btn1, col_btn2, col_btn3 = st.columns([1,2,1])
