@@ -87,7 +87,7 @@ with st.sidebar:
 
 # ==================== HEADER ====================
 st.markdown("<h1 style='text-align:center; color:#D32F2F; margin:0;'>Medical Insurance</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align:center; color:#D32F2F; opacity:0.9; margin-top:8px;'>Cost Analysis & Prediction</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center; color:#D32F2F; opacity:0.9; margin-top:8px;'>Cost Analysis</h2>", unsafe_allow_html=True)
 st.markdown("---")
 
 # ==================== TOP METRICS ====================
